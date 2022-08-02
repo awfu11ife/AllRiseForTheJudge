@@ -1,0 +1,21 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.30f1 (1fb1bf06830e) revision 2077119'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19043) 64bit CoreSingleLanguage' Language: 'ru' Physical Memory: 12205 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\Hub\Editor\2020.3.30f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+C:/Users/Гриша/Documents/GitHub/AllRiseForTheJudge/AllRiseForTheJudge
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+50318
+Successfully changed project path to: C:/Users/Гриша/Documents/GitHub/AllRiseForTheJudge/AllRiseForTheJudge
+C:/Users/Гриша/Documents/GitHub/AllRiseForTheJudge/AllRiseForTheJudge
+Using Asset Import Pipeline V2.
