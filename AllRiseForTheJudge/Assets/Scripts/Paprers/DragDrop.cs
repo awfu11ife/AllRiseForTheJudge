@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerDownHandler
 {
     [Header("Components")]
     [SerializeField] private Canvas _canvas;
@@ -70,6 +70,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _canvasGroup.blocksRaycasts = true;
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _rectTransform.SetAsLastSibling();
+    }
+
     private void MoveInsideBorders()
     {
         var paprerPosition = _rectTransform.anchoredPosition;
@@ -79,4 +84,5 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         _rectTransform.anchoredPosition = new Vector2(paprerPosition.x, paprerPosition.y);
     }
+
 }

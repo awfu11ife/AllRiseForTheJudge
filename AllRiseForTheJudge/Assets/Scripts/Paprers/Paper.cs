@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(DragDrop))]
 public class Paper : MonoBehaviour
 {
     [SerializeField] private TMP_Text _nameArea;
