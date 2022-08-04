@@ -5,11 +5,13 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(RectTransform))]
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerDownHandler
 {
     [Header("Components")]
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private RectTransform _table;
+    [SerializeField] private RectTransform _draggingArea;
+    [SerializeField] private RectTransform _currentParentRectTransform;
 
     [Header("Mover Variables")]
     [SerializeField] private float _xVisibleArea;
@@ -20,15 +22,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
-    private bool _isPointerOnObject;
-    private float _tableWidth;
-    private float _tableHeight;
+    private float _draggingAreaWidth;
+    private float _draggingAreaHeight;
 
     private float _maxXPosition;
     private float _minXPosition;
     private float _maxYPosition;
     private float _minYPosition;
 
+    public bool IsDragging { get; private set; }
 
     public event UnityAction OnPickedUp
     {
@@ -44,19 +46,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     private void Start()
     {
-        _tableWidth = _table.rect.width;
-        _tableHeight = _table.rect.height;
-
-        _maxXPosition = _tableWidth / 2 - _rectTransform.rect.x * _xVisibleArea;
-        _minXPosition = -_tableWidth / 2 + _rectTransform.rect.x * _xVisibleArea;
-        _maxYPosition = _tableHeight / 2 - _rectTransform.rect.y * _yVisibleArea;
-        _minYPosition = -_tableHeight / 2 + _rectTransform.rect.y * _yVisibleArea;
+        UpdateDraggingArea(_draggingArea, _currentParentRectTransform);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         _canvasGroup.blocksRaycasts = false;
         _onPickedUp?.Invoke();
+        IsDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -68,11 +65,26 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         _canvasGroup.blocksRaycasts = true;
+        IsDragging = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         _rectTransform.SetAsLastSibling();
+    }
+
+    public void UpdateDraggingArea(RectTransform draggingArea, RectTransform parentRectTransform)
+    {
+        _draggingArea = draggingArea;
+        _rectTransform.SetParent(parentRectTransform.gameObject.transform);
+
+        _draggingAreaWidth = draggingArea.rect.width;
+        _draggingAreaHeight = draggingArea.rect.height;
+
+        _maxXPosition = _draggingAreaWidth / 2 - _rectTransform.rect.x * _xVisibleArea;
+        _minXPosition = -_draggingAreaWidth / 2 + _rectTransform.rect.x * _xVisibleArea;
+        _maxYPosition = _draggingAreaHeight / 2 - _rectTransform.rect.y * _yVisibleArea;
+        _minYPosition = -_draggingAreaHeight / 2 + _rectTransform.rect.y * _yVisibleArea;
     }
 
     private void MoveInsideBorders()

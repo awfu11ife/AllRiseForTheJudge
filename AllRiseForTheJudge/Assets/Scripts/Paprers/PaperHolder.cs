@@ -20,14 +20,14 @@ public class PaperHolder : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag.TryGetComponent(out Paper paper))
         {
-            if (paper.IsChoiceMade == true)
+            /*if (paper.IsChoiceMade == true)
             {
                 _currentDroptPaper = paper;
                 _dragDrop = paper.GetComponent<DragDrop>();
                 _dragDrop.OnPickedUp += OnPickUp;
                 eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = _rectTransform.anchoredPosition;
                 IsDrop = true;
-            }
+            }*/
         }
     }
 

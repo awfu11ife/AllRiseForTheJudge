@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 
 public class PaperMovingZone : MonoBehaviour, IPointerEnterHandler
 {
-    [SerializeField] private UnityEvent<GameObject> _onCursorEnter;
+    [SerializeField] private UnityEvent<RectTransform, RectTransform> _onCursorEnter;
+    [SerializeField] private RectTransform _papersRectTransform;
 
-    public event UnityAction<GameObject> OnCursorEnter
+    public event UnityAction<RectTransform, RectTransform> OnCursorEnter
     {
         add => _onCursorEnter.AddListener(value);
         remove => _onCursorEnter.RemoveListener(value);
@@ -16,7 +17,6 @@ public class PaperMovingZone : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        print(eventData.pointerEnter.gameObject.name);
-        _onCursorEnter.Invoke(eventData.pointerEnter);
+        _onCursorEnter.Invoke((RectTransform)eventData.pointerEnter.gameObject.transform, _papersRectTransform);
     }
 }
