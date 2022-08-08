@@ -36,7 +36,7 @@ public class MovingZoneChanger : MonoBehaviour
         UpdateChildList();
     }
 
-    private void FindMovingObject(RectTransform rectTransform, RectTransform parentRectTransform)
+    private void FindMovingObject(RectTransform rectTransform, RectTransform parentRectTransform, float xInvisibleZone, float yInvisibleZone)
     {
         UpdateChildList();
 
@@ -45,7 +45,8 @@ public class MovingZoneChanger : MonoBehaviour
             if (item.IsDragging == true)
             {
                 item.GetComponent<PaperObjectSwap>().Swap(_paperTemplateObjectInedx);
-                item.UpdateDraggingArea(rectTransform, parentRectTransform);
+                item.UpdateDraggingArea(rectTransform, parentRectTransform, xInvisibleZone, yInvisibleZone);
+                item.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
     }
