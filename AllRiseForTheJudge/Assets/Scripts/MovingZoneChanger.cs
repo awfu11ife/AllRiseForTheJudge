@@ -10,6 +10,8 @@ public class MovingZoneChanger : MonoBehaviour
     private RectTransform _rectTransform;
     private List<DragDrop> _childObjects = new List<DragDrop>();
 
+    public int PaperTemplateObjectIndex => _paperTemplateObjectInedx;
+
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -36,7 +38,7 @@ public class MovingZoneChanger : MonoBehaviour
         UpdateChildList();
     }
 
-    private void FindMovingObject(RectTransform rectTransform, RectTransform parentRectTransform, float xInvisibleZone, float yInvisibleZone)
+    public void FindMovingObject(RectTransform rectTransform, MovingZoneChanger movingZoneChanger, float xInvisibleZone, float yInvisibleZone)
     {
         UpdateChildList();
 
@@ -44,8 +46,8 @@ public class MovingZoneChanger : MonoBehaviour
         {
             if (item.IsDragging == true)
             {
-                item.GetComponent<PaperObjectSwap>().Swap(_paperTemplateObjectInedx);
-                item.UpdateDraggingArea(rectTransform, parentRectTransform, xInvisibleZone, yInvisibleZone);
+                item.GetComponent<PaperObjectSwap>().Swap(movingZoneChanger.PaperTemplateObjectIndex);
+                item.UpdateDraggingArea(rectTransform, movingZoneChanger.GetComponent<RectTransform>(), xInvisibleZone, yInvisibleZone);
                 item.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
